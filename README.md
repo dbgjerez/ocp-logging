@@ -102,8 +102,8 @@ After the operator is configured, we can visualize the different logs.
 
 Kibana is the application used to visualize it. The following command gets the Kibana URL:
 
-```bashoc get route -A | grep kibana | awk '{print $3}' 
-kibana-openshift-logging.apps.cluster-v866j.v866j.sandbox1219.opentlc.com
+```bash
+oc get route -A | grep kibana | awk '{print $3}' 
 ```
 
 Now, we can put it on our favourite web browser and log in with our OpenShift credentials.
