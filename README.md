@@ -108,4 +108,4 @@ kibana-openshift-logging.apps.cluster-v866j.v866j.sandbox1219.opentlc.com
 
 Now, we can put it on our favourite web browser and log in with our OpenShift credentials.
 
-At this point, you will visualize all the logs that the differents pods throw in namespaces labeled with ```openshift.io/cluster-monitoring="true"```
+At this point, you will visualize all the logs that the different pods throw in namespaces labeled with ```openshift.io/cluster-monitoring="true"```
