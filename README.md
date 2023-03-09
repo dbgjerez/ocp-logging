@@ -1,4 +1,13 @@
-// TODO: explain the objective
+
+The observability is composed for the following topics:
+
+* **Monitoring:**  is the capacity to know how many resources are consuming the applications, response times, etc.
+* **Logging**: We need to know what is happening in our applications. It's essential to have the capacity to visualize it as functional pieces, as they could be distributed between many applications or application instances.
+* **Traceability:** is the ability to follow a request and know the different services by which it enters in order. Additionally, some util information could be saved as response time per service, logging, etc. 
+
+In this repository, we will see how to configure the OpenShift logging stack which is composite for the following Open Source tools:
+
+![OCP logging architecture](images/openshift-logging-topology.png)
 
 # Install the operators
 
@@ -109,3 +118,7 @@ oc get route -A | grep kibana | awk '{print $3}'
 Now, we can put it on our favourite web browser and log in with our OpenShift credentials.
 
 At this point, you will visualize all the logs that the different pods throw in namespaces labeled with ```openshift.io/cluster-monitoring="true"```
+
+# References
+
+* https://docs.openshift.com/container-platform/4.11/logging/cluster-logging-deploying.html
