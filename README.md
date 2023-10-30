@@ -1,5 +1,5 @@
 
-The observability is composed for the following topics:
+The observability is composed of the following topics:
 
 * **Monitoring:**  is the capacity to know how many resources are consuming the applications, response times, etc.
 * **Logging**: We need to know what is happening in our applications. It's essential to have the capacity to visualize it as functional pieces, as they could be distributed between many applications or application instances.
