@@ -16,7 +16,6 @@ spec:
           memory: 2Gi
       storage:
         size: 200G
-        storageClassName: gp2
     retentionPolicy:
       application:
         maxAge: 1d
