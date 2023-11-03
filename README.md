@@ -185,7 +185,7 @@ Kibana has a lot of functionalities. In this example, we just query the logs dat
 
 ### Kibana query
 
-To query the application logs, we have a lot of possibilities, in this example we're creating a query to consult the specific text:
+To query the application logs, we have a lot of possibilities. In this example, we're creating a query to consult the specific text:
 
 ![OCP logging architecture](images/kibana.png)
 
