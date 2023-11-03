@@ -11,11 +11,9 @@ In this repository, we will see how to configure the OpenShift logging stack whi
 
 # Install the operators
 
-GitOps isn't mandatory, but it is a good way to facilitate how we can work with the cluster components and applications. 
-
 ## OpenShift Elasticsearch Operator
 
-Firstly, apply the "OpenShift Elasticsearch Operator". This operator installs Elasticseach, which is the database application for logs.
+Firstly, apply the "OpenShift Elasticsearch Operator". The operator installs Elasticseach, which is the database that store the application logs.
 
 It's essential to select a stable channel, in this case, I've chosen the ```stable-5.7``` channel. 
 
@@ -23,7 +21,7 @@ It's essential to select a stable channel, in this case, I've chosen the ```stab
 oc apply -f operators/elasticsearch.yaml
 ```
 
-Once the operator has been installed, you have to label the namespace with ```openshift.io/cluster-monitoring: "true"``` to ensure this namespace will be monitored. 
+Once the operator has been installed, you have to label the namespace with ```openshift.io/cluster-monitoring: "true"``` to ensure that the namespace will be monitored. 
 
 ```bash
 oc label namespace openshift-operators-redhat openshift.io/cluster-monitoring="true"
@@ -31,21 +29,21 @@ oc label namespace openshift-operators-redhat openshift.io/cluster-monitoring="t
 
 ## Red Hat OpenShift Logging Operator
 
-This operator is responsible for picking up the logs from every pod standard output. Fluentd gets pod logs and sends them wherever we want, by default to Elasticsearch. 
+This operator picks up the logs from every pod standard output. Fluentd gets pod logs and sends them wherever we want, by default to Elasticsearch.
 
 Also, you can do some important actions like log forwarding, reformat the structure, etc. 
 
 ### Installation
 
-The process to install the "Red Hat OpenShift Logging Operator" is very similar that the previous operator. 
+The process to install the "Red Hat OpenShift Logging Operator" is the same as the previous operator. 
 
-In this case, we will choose the ```stable-5.7``` channel too. 
+We will choose the ```stable-5.7``` channel too. 
 
 ```bash
 oc apply -f operators/cluster-logging.yaml
 ```
 
-Now, we will label the namespace: 
+And now, for the same reason, we're going to label the namespace. 
 
 ```bash
 oc label namespace openshift-operators-redhat openshift.io/cluster-monitoring="true"
@@ -53,7 +51,9 @@ oc label namespace openshift-operators-redhat openshift.io/cluster-monitoring="t
 
 ### Create ClusterLogging instance
 
-By default, the Operator doesn't do anything. We have to create a ```ClusterLogging instance``` with the definition of the different pieces:
+An operator is an application that has a controller that checks the state of our CRD to ensure the state of our applications. 
+
+We have to create a ```ClusterLogging instance``` with the definition of the different pieces:
 
 ```bash
 kind: ClusterLogging
@@ -63,7 +63,8 @@ metadata:
   namespace: openshift-logging
 spec:
   collection:
-    type: fluentd
+    logs: 
+      type: "fluentd"
   logStore:
     elasticsearch:
       nodeCount: 3
@@ -73,16 +74,19 @@ spec:
           memory: 2Gi
       storage:
         size: 200G
-        storageClassName: gp2
     retentionPolicy:
       application:
-        maxAge: 7d
+        maxAge: 1d
+      infra:
+        maxAge: 1d
+      audit:
+        maxAge: 1d
     type: elasticsearch
   managementState: Managed
   visualization:
+    type: kibana
     kibana:
       replicas: 1
-    type: kibana
 ```
 
 The previous file shows a basic configuration with the Fluentd, Elasticsearch and Kibana configurations, but you will be able to change some parameters like retention, resources, etc.
@@ -90,7 +94,7 @@ The previous file shows a basic configuration with the Fluentd, Elasticsearch an
 We apply it:
 
 ```bash
-oc apply -f gitops/cluster-logging.yaml -n openshift-logging
+oc apply -f cl-instance.yaml -n openshift-logging
 ```
 
 Also, the operator creates some deployments: 
@@ -107,18 +111,32 @@ kibana                         1/1     1            1           16h
 
 # Visualize the logs
 
-After the operator is configured, we can visualize the different logs. 
+After the operator is configured, we can visualize the different logs in Kibana. 
 
-Kibana is the application used to visualize it. The following command gets the Kibana URL:
+## Access to Kibana
+
+The following command gets the Kibana URL:
 
 ```bash
 oc get route -A | grep kibana | awk '{print $3}' 
 ```
 
-Now, we can put it on our favourite web browser and log in with our OpenShift credentials.
+Now, we can put it on our favorite web browser and log in with our OpenShift credentials.
 
-At this point, you will visualize all the logs that the different pods throw in namespaces labeled with ```openshift.io/cluster-monitoring="true"```
+At this point, you will visualize all the logs that the different pods on namespaces labeled with ```openshift.io/cluster-monitoring="true"```
+
+# Deploy an application and visualize the logs
+
+## Deploy the database
+
+## Deploy the application
+
+## Logs
+
+### Kibana overview
+
+### Kibana query
 
 # References
 
-* https://docs.openshift.com/container-platform/4.11/logging/cluster-logging-deploying.html
+* https://docs.openshift.com/container-platform/4.13/logging/cluster-logging-deploying.html
