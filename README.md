@@ -149,15 +149,45 @@ oc label namespace demo openshift.io/cluster-monitoring="true"
 
 ## Deploy the database
 
-Once, we have a names
+Once, we have a namespace labeled, we can deploy our application. It needs a database so we'll start deploying it.
+
+To deploy a ```MariaDB``` instance we have some possibilities. In this case, I have chosen Helm to deploy the ```ConfigMap```, ```Deployment```, ```PersistentVolumeClaim```, ```Secret``` and the ```Service```. 
+
+We can modify the default values into de ```users.values.yaml``` file.
+
+In short, we'll deploy the database: 
+
+```bash
+helm template -f mariadb/users.values.yaml mariadb | oc apply -f -
+```
 
 ## Deploy the application
 
+With the database running, we are going to deploy the application.
+
+The process to deploy the application is very similar to the database. I also used Helm to deploy it:
+
+```bash
+helm template -f ms-users/gitops/dev.values.yaml ms-users/gitops | oc apply -f -
+```
+
+At this point, we can query the application endpoint.
+
 ## Logs
+
+As I've described in this documentation, Kibana shows the application logs. 
 
 ### Kibana overview
 
+Kibana has a lot of functionalities. In this example, we just query the logs database. So, the first step is create an index:
+
+![OCP logging architecture](images/kibana-index.png)
+
 ### Kibana query
+
+To query the application logs, we have a lot of possibilities, in this example we're creating a query to consult the specific text:
+
+![OCP logging architecture](images/kibana.png)
 
 # References
 

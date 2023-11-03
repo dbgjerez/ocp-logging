@@ -52,7 +52,7 @@ public class UserService {
         final User user = Optional.ofNullable(idUser)
                 .map(this::findById)
                 .orElseThrow(() -> {
-                    Log.info(String.format("Usuario %d no encontrado", idUser));
+                    Log.warn(String.format("Usuario %d no encontrado", idUser));
                     throw new NotFoundException();
                 });
         user.setDni(u.getDni());
