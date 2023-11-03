@@ -34,8 +34,7 @@ mvn quarkus:dev
 We will compile a native image, using ```Maven```:
 
 ```bash
-mvn package \                                       
-    quarkus:image-build
+mvn package quarkus:image-build
 ```
 
 After some minutes, we can build the final image:
