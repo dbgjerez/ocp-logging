@@ -127,7 +127,29 @@ At this point, you will visualize all the logs that the different pods on namesp
 
 # Deploy an application and visualize the logs
 
+We'll use a demo application that represents a user entity. This application can do all the CRUD operations and save them into a MariaDB database. 
+
+The use of this application is simple and we can use it to visualize some different logs. 
+
+## Create the namespace
+
+We need a namespace to deploy the application, this dependencies and visualize the application logs. 
+
+We'll deploy all on a namespace called ```demo```. So to create it, we'll use the OpenShift concept of "project":
+
+```bash
+oc new-project demo
+```
+
+As we have seen in a previous section, we need to label the namespace:
+
+```bash
+oc label namespace demo openshift.io/cluster-monitoring="true"
+```
+
 ## Deploy the database
+
+Once, we have a names
 
 ## Deploy the application
 
