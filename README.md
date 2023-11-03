@@ -17,13 +17,13 @@ GitOps isn't mandatory, but it is a good way to facilitate how we can work with 
 
 Firstly, apply the "OpenShift Elasticsearch Operator". This operator installs Elasticseach, which is the database application for logs.
 
-It's essential to select a stable channel, in this case, I've chosen the ```stable-5.6``` channel. 
+It's essential to select a stable channel, in this case, I've chosen the ```stable-5.7``` channel. 
 
 ```bash
-oc apply -f gitops/operators/elasticsearch.yaml
+oc apply -f operators/elasticsearch.yaml
 ```
 
-Once the operator has been installed, you can label the namespace with ```openshift.io/cluster-monitoring: "true"``` to ensure this namespace will be monitored. 
+Once the operator has been installed, you have to label the namespace with ```openshift.io/cluster-monitoring: "true"``` to ensure this namespace will be monitored. 
 
 ```bash
 oc label namespace openshift-operators-redhat openshift.io/cluster-monitoring="true"
@@ -39,10 +39,10 @@ Also, you can do some important actions like log forwarding, reformat the struct
 
 The process to install the "Red Hat OpenShift Logging Operator" is very similar that the previous operator. 
 
-In this case, we will choose the ```stable-5.6``` channel too. 
+In this case, we will choose the ```stable-5.7``` channel too. 
 
 ```bash
-oc apply -f gitops/operators/cluster-logging.yaml
+oc apply -f operators/cluster-logging.yaml
 ```
 
 Now, we will label the namespace: 
