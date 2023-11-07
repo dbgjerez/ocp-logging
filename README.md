@@ -179,7 +179,7 @@ As I've described in this documentation, Kibana shows the application logs.
 
 ### Kibana overview
 
-Kibana has a lot of functionalities. In this example, we just query the logs database. So, the first step is create an index:
+Kibana has a lot of functionalities. In this example, we just query the logs database. So, the first step is to create an index:
 
 ![OCP logging architecture](images/kibana-index.png)
 
